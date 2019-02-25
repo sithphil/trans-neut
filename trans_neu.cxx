@@ -130,7 +130,7 @@ Field3D lnB, B3d;
 int NX,NY,NZ;
 
 // width of private flux (PF) region in Y grid
-int  jyseps11;
+int jyseps11;
 
 // filter 
 BoutReal filter_para;
@@ -1235,8 +1235,8 @@ int physics_init(bool restarting)
   output<<"debug>>>> check Nm0, Vm0, CF_BC_x0 @ guard cell="<<Nm0<<","<<Vm0<<","<<CF_BC_x0<<endl;
   output<<"debug>>>> check CF_BC_y0, CF_BC_y1 @ guard cell="<<CF_BC_y0<<","<<CF_BC_y1<<endl;
  
-  output.write("debug>>>>physics_init() is OK!\n");
-  output.write("debug>>>>Vmx0, Vmy0 =%e, %e \n",Vm0*sin(alpha*3.1415),Vm0*cos(alpha*3.14));
+  output.write("debug>>>> physics_init() is OK!\n");
+  output.write("debug>>>> Vmx0, Vmy0 =%e, %e \n",Vm0*sin(alpha*3.1415),Vm0*cos(alpha*3.14));
      
   return(0);
 }
@@ -1691,8 +1691,8 @@ int physics_run(BoutReal t)
  //Vm.x=Vmx;
  //Vm.y=Vmy; 
  ddt(Vm) = - V_dot_Grad(Vm,Vm) 
-           //- Grad(pm)/temp_Nm/Mm
-           //+ S_diss*Vm
+           - Grad(pm)/temp_Nm/Mm
+           + S_diss*Vm/temp_Nm
            ;
  mesh->communicate(dVmdt);
  dVmdt =ddt(Vm);
